@@ -7,20 +7,21 @@
 
 import SwiftUI
 
+ var prayers: [(prayer: String, time: String)] = [
+    ("Fajr","06:00 am"),
+    ("Dhuhr","02:10 pm"),
+    ("Asr","05:40 pm"),
+    ("Maghrib","08:18 pm"),
+    ("Isha","09:48 pm")
+]
+
 struct TaskScheduler: View {
     @State private var nextPrayer = "Loading..."
     @State private var nextTime = "Loading..."
     
-    let prayers: [(prayer: String, time: String)] = [
-        ("Fajr","06:00 am"),
-        ("Dhuhr","02:10 pm"),
-        ("Asr","05:40 pm"),
-        ("Maghrib","08:18 pm"),
-        ("Isha","09:48 pm")
-    ]
     var body: some View {
         VStack{
-            Text("The next Prayer is:")
+            Text("The next Iqamah is:")
                 .font(.title)
             Text(nextPrayer + " at " + nextTime)
                 .font(.largeTitle)
@@ -87,24 +88,52 @@ struct ClockView: View {
             }
             
         }
-    
-struct ContentView: View {
+
+struct HomeView: View {
     var body: some View {
-        VStack(alignment: .center) {
-            
-            
-            //title
+        VStack{
             Text("1881 Mickleham Musallah")
                 .font(.largeTitle)
                 .fontWeight(.semibold)
                 .multilineTextAlignment(.center)
             //Clock & next prayer
-            ClockView()
+            VStack(){
+                Text("The time now is:")
+                    .font(.title)
+                ClockView()
+            }
+            .padding(.vertical, 20.0)
+            
             TaskScheduler()
             Spacer()
+        }
+    }
+}
+
+struct ContentView: View {
+    var body: some View {
+        VStack(alignment: .center) {
+            
+            TabView {
+                HomeView()
+                    .tabItem {
+                        Text("Home")
+                    }
+                    
+                Text("Duas Screen")
+                    .tabItem{
+                        Text("Duas")
+                    }
+                Text("Settings screen")
+                    .tabItem{
+                        Text("Settings")
+                    }
+                
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+
             
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 #Preview {
