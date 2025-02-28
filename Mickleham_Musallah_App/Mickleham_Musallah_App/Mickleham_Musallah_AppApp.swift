@@ -19,7 +19,7 @@ struct Mickleham_Musallah_AppApp: App {
     }
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RegistrationView()
         }
     }
 }

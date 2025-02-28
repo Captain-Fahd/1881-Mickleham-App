@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-var prayers: [(prayer: String, time: String)] = [
-   ("Fajr","06:00 am"),
-   ("Dhuhr","02:10 pm"),
-   ("Asr","05:40 pm"),
-   ("Maghrib","08:18 pm"),
-   ("Isha","09:48 pm")
+var prayers: [(prayer: String, time: String, icon: String)] = [
+   ("Fajr","06:00 AM", "sunrise"),
+   ("Dhuhr","02:10 PM", "sun.max"),
+   ("Asr","05:40 PM", "cloud.sun"),
+   ("Maghrib","08:18 PM", "sunset"),
+   ("Isha","09:48 PM", "moon.stars")
 ]
 
 struct TaskScheduler: View {
@@ -48,7 +48,7 @@ struct TaskScheduler: View {
        let now = Date()
        let calendar = Calendar.current
        
-       let prayerTimes = prayers.compactMap { (prayer, time) -> (Date, String)? in
+       let prayerTimes = prayers.compactMap { (prayer, time, icon) -> (Date, String)? in
            if let prayerTime = formatter.date(from: time) {
                let components = calendar.dateComponents([.hour, .minute], from: prayerTime)
                if let todayPrayerTime = calendar.date(bySettingHour: components.hour!, minute: components.minute!, second: 0, of: now) {
@@ -68,4 +68,11 @@ struct TaskScheduler: View {
        }
        
    }
+    func getPrayerTime(num: Int) -> String {
+        if num >= 0 && num < prayers.count {
+            return prayers[num].time
+        } else {
+            return "invalid input"
+        }
+    }
 }
